@@ -4,11 +4,14 @@ import { Text, View } from 'react-native';
 
 
 export default class RecentChatsScreen extends React.Component {
-  
+  static navigatorStyle = {
+    navBarTextFontSize: 24,
+    navBarComponentAlignment: 'fill'
+  };
   render() {
     return(
     	<View>
-    		<Text>List of recent chats</Text>
+    		<Text>List of recent chats  COKIIII</Text>
         
     	</View>
     	)

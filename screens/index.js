@@ -1,14 +1,14 @@
 import { Navigation } from 'react-native-navigation';
 
 import HomeScreen from './HomeScreen';
-import ChatScreen from './ChatScreen';
+import Catalog from './Catalog';
 import RecentChatsScreen from './RecentChatsScreen';
-import AllContactsScreen from './AllContactsScreen';
+import Search from './Search';
 //import FlatListDemo from './FlatListDemo';
 
 // register all screens of the app (including internal ones)
 export function registerScreens() {
   Navigation.registerComponent('example.RecentChatsScreen', () => RecentChatsScreen);
-  Navigation.registerComponent('example.AllContactsScreen', () => AllContactsScreen);
-  Navigation.registerComponent('example.HomeScreen', () => HomeScreen);
+  Navigation.registerComponent('example.Search', () => Search);
+  Navigation.registerComponent('example.Catalog', () => Catalog);
 }

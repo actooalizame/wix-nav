@@ -16,10 +16,17 @@ Navigation.startTabBasedApp({
     },
     {
       label: 'Locales',
-      screen: 'example.AllContactsScreen',
+      screen: 'example.Catalog',
       icon: require('./screens/icon.png'),
       selectedIcon: require('./screens/icon.png'), // iOS only
       title: 'Screen Two'
+    },
+    {
+      label: 'Busqueda',
+      screen: 'example.Search',
+      icon: require('./screens/icon.png'),
+      selectedIcon: require('./screens/icon.png'), // iOS only
+      title: 'Busqueda'
     }
   ]
 });

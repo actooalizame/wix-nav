@@ -8,18 +8,25 @@ registerScreens(); // this is where you register all of your app's screens
 Navigation.startTabBasedApp({
   tabs: [
     {
-      label: 'One',
+      label: 'Catalogo',
       screen: 'example.RecentChatsScreen', // this is a registered name for a screen
-      icon: require('../img/one.png'),
-      selectedIcon: require('../img/one_selected.png'), // iOS only
+      icon: require('./screens/icon.png'),
+      selectedIcon: require('./screens/icon.png'), // iOS only
       title: 'Screen One'
     },
     {
-      label: 'Two',
-      screen: 'example.AllContactsScreen',
-      icon: require('../img/two.png'),
-      selectedIcon: require('../img/two_selected.png'), // iOS only
+      label: 'Locales',
+      screen: 'example.Catalog',
+      icon: require('./screens/icon.png'),
+      selectedIcon: require('./screens/icon.png'), // iOS only
       title: 'Screen Two'
+    },
+    {
+      label: 'Busqueda',
+      screen: 'example.Search',
+      icon: require('./screens/icon.png'),
+      selectedIcon: require('./screens/icon.png'), // iOS only
+      title: 'Busqueda'
     }
   ]
 });
