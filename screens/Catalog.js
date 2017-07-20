@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
-import { List, ListItem, SearchBar } from "react-native-elements";
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
+import { List, ListItem, SearchBar, Header, Item } from "react-native-elements";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Autocomplete from 'react-native-autocomplete-input';
 
 class Catalog extends Component {
   static navigatorStyle = {
@@ -18,7 +19,8 @@ class Catalog extends Component {
       page: 1,
       seed: 1,
       error: null,
-      refreshing: false
+      refreshing: false,
+      query: ''
     };
   }
 
@@ -38,7 +40,8 @@ class Catalog extends Component {
           data: page === 1 ? res.results : [...this.state.data, ...res.results],
           error: res.error || null,
           loading: false,
-          refreshing: false
+          refreshing: false,
+          query: ''
         });
       })
       .catch(error => {
@@ -83,9 +86,28 @@ class Catalog extends Component {
     );
   };
 
-  renderHeader = () => {
-    return <SearchBar placeholder="Type Here..." lightTheme round />;
+  findData = (query) => {
+    if(query === '') {
+      return [];
+    }
+
+    const data = this.state.data;
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    return data.filter(item => item.name.first.search(regex) >= 0);  
   };
+
+/*
+  renderHeader = () => {
+    const { query } = this.state;
+    const items = this.findData(query);
+    const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
+    return (
+      <Header rounded>
+        <Text>Search</Text>
+     
+      </Header>
+    )
+  };*/
 
   renderFooter = () => {
     if (!this.state.loading) return null;
@@ -103,42 +125,104 @@ class Catalog extends Component {
     );
   };
 
-  findData = (query) => {
-    if(query === '') {
-      return [];
-    }
-
-    const { data } = this.state.data;
-    const regex = new RegExp(`${query.trim()}`, 'i');
-    return data.filter(item => item.name.first.search(regex) >= 0);  
-  };
+  
 
   render() {
+    const { query } = this.state;
+    const items = this.findData(query);
+    const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
     return (
-      <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-        <FlatList
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <ListItem
-              roundAvatar
-              title={`${item.name.first} ${item.name.last}`}
-              subtitle={item.email}
-              avatar={{ uri: item.picture.thumbnail }}
-              containerStyle={{ borderBottomWidth: 0 }}
-            />
+      <View style={styles.container}>
+        <Autocomplete
+          //autoCapitalize="none"
+          autoCorrect={false}
+          containerStyle={styles.autocompleteContainer}
+          data={items.length === 1 && comp(query, items[0].name.first) ? [] : items}
+          defaultValue={query}
+          onChangeText={text => this.setState({ query: text })}
+          placeholder="Busca por nombre de producto"
+          renderItem={({ name }) => (
+            <TouchableOpacity onPress={() => this.setState({ query: name.first })}>
+              <Text style={styles.itemText}>
+                {name.first} {name.last}
+              </Text>
+            </TouchableOpacity>
           )}
-          keyExtractor={item => item.email}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
-          onRefresh={this.handleRefresh}
-          refreshing={this.state.refreshing}
-          onEndReached={this.handleLoadMore}
-          onEndReachedThreshold={20}
         />
-      </List>
+        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0, marginTop: 40 }}>
+          <FlatList
+            data={this.state.data}
+            renderItem={({ item }) => (
+              <ListItem
+                roundAvatar
+                title={`${item.name.first} ${item.name.last}`}
+                subtitle={item.email}
+                avatar={{ uri: item.picture.thumbnail }}
+                containerStyle={{ borderBottomWidth: 0 }}
+              />
+            )}
+            keyExtractor={item => item.email}
+            ItemSeparatorComponent={this.renderSeparator}
+            //ListHeaderComponent={this.renderHeader}
+            ListFooterComponent={this.renderFooter}
+            onRefresh={this.handleRefresh}
+            refreshing={this.state.refreshing}
+            onEndReached={this.handleLoadMore}
+            onEndReachedThreshold={20}
+          />
+        </List>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F5FCFF',
+    flex: 1,
+    paddingTop: 25
+  },
+  autocompleteContainer: {
+    flex: 1,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 1
+  },
+  itemText: {
+    fontSize: 17,
+    textAlign: 'center',
+    margin: 2,
+    zIndex: 2,
+    borderBottomWidth: 1,
+    borderColor: "#CED0CE"
+  },
+  descriptionContainer: {
+    // `backgroundColor` needs to be set otherwise the
+    // autocomplete input will disappear on text input.
+    backgroundColor: '#F5FCFF',
+    marginTop: 25
+  },
+  infoText: {
+    textAlign: 'center'
+  },
+  titleText: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  directorText: {
+    color: 'grey',
+    fontSize: 12,
+    marginBottom: 10,
+    textAlign: 'center'
+  },
+  openingText: {
+    textAlign: 'center'
+  }
+});
 
 export default Catalog;

@@ -19,7 +19,7 @@ Navigation.startTabBasedApp({
       screen: 'example.Catalog',
       icon: require('./screens/icon.png'),
       selectedIcon: require('./screens/icon.png'), // iOS only
-      title: 'Screen Two'
+      title: 'Catalogo'
     },
     {
       label: 'Busqueda',
