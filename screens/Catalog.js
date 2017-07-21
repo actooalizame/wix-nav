@@ -7,7 +7,6 @@ import Autocomplete from 'react-native-autocomplete-input';
 class Catalog extends Component {
   static navigatorStyle = {
     navBarTextFontSize: 18,
-    navBarComponentAlignment: 'fill'
   };
   
   constructor(props) {

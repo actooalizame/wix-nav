@@ -8,9 +8,12 @@ import {
 import MapView from 'react-native-maps';
 // Import data
 import { characters } from '../Characters';
-
+import Callout from './Callout';
 
 export default class Map extends Component {
+  static navigatorStyle = {
+    navBarTextFontSize: 18,
+  };
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -42,10 +45,20 @@ export default class Map extends Component {
                 latitude: character.coordinate[0],
                 longitude: character.coordinate[1],
               }}
+              // Callout offset
+              calloutOffset={{ x: -8, y: 28 }}
               // Greed color for good characters and red for others
               pinColor={character.good ? '#009688' : '#f44336'}
               key={index}
-            />
+            >
+            {/* Callout */}
+              <MapView.Callout tooltip style={styles.callout}>
+                <Callout
+                  name={character.name}
+                  image={character.image}
+                />
+              </MapView.Callout>
+            </MapView.Marker>
           )}
         </MapView>
         {/* Button */}
@@ -57,7 +70,7 @@ export default class Map extends Component {
               showGoodOnly: !this.state.showGoodOnly
             })}
           >
-            <Text>{this.state.showGoodOnly ? 'Show All' : 'Show Good Only'}</Text>
+            <Text>{this.state.showGoodOnly ? 'Ver Todos' : 'Filtrar'}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -91,5 +104,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 12,
     width: 160,
+  },
+  callout: {
+    width: 140,
   },
 });
