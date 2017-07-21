@@ -3,6 +3,11 @@ import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity }
 import { List, ListItem, SearchBar, Header, Item } from "react-native-elements";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Autocomplete from 'react-native-autocomplete-input';
+import SingleItem from './SingleItem';
+import { Navigation } from 'react-native-navigation';
+
+Navigation.registerComponent('example.SingleItem', () => SingleItem);
+
 
 class Catalog extends Component {
   static navigatorStyle = {
@@ -153,6 +158,13 @@ class Catalog extends Component {
             data={this.state.data}
             renderItem={({ item }) => (
               <ListItem
+                onPress={() => this.props.navigator.push({
+                  screen: 'example.SingleItem', // unique ID registered with Navigation.registerScreen
+                  title: `${item.name.first} ${item.name.last}`, // navigation bar title of the pushed screen (optional)
+                  passProps: {item}, // Object that will be passed as props to the pushed screen (optional)
+                  animated: true, // does the push have transition animation or does it happen immediately (optional)
+                  animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the push have different transition animation (optional)
+                })}
                 roundAvatar
                 title={`${item.name.first} ${item.name.last}`}
                 subtitle={item.email}

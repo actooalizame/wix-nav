@@ -6,7 +6,7 @@ export default class AllContactsScreen extends React.Component {
   render() {
     return (
     	<View>
-    		<Text>List of all contacts bebeeee</Text>
+    		<Text>List of all contacts bebeeee {this.props.item.name.first}</Text>
 		    
     	</View>
     	)

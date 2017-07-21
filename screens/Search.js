@@ -1,5 +1,6 @@
 import Autocomplete from 'react-native-autocomplete-input';
 import React, { Component } from 'react';
+import { Button } from 'react-native-elements';
 import {
   StyleSheet,
   Text,
@@ -53,6 +54,7 @@ export default class Search extends Component {
     const { query } = this.state;
     const films = this.findFilm(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
+    //const navOptions = 
 
     return (
       <View style={styles.container}>

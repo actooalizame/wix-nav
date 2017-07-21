@@ -6,6 +6,9 @@ registerScreens(); // this is where you register all of your app's screens
 
 // start the app
 Navigation.startTabBasedApp({
+  appStyle: {
+      forceTitlesDisplay: true
+    },
   tabs: [
     {
       label: 'Catalogo',
