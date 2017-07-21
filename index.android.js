@@ -9,10 +9,10 @@ Navigation.startTabBasedApp({
   tabs: [
     {
       label: 'Catalogo',
-      screen: 'example.RecentChatsScreen', // this is a registered name for a screen
+      screen: 'example.Map', // this is a registered name for a screen
       icon: require('./screens/icon.png'),
       selectedIcon: require('./screens/icon.png'), // iOS only
-      title: 'Screen One'
+      title: 'Mapa'
     },
     {
       label: 'Locales',
