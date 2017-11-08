@@ -4,11 +4,12 @@ import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
 
 class MeteorListViewComponent extends Component {
 
+
   renderRow(item) {
     return (
       <View style={styles.row}>
         <Text style={styles.rowText}>{item.name}</Text>
-        <TouchableOpacity onPress={() => Meteor.call('removeItem', item._id)}>
+        <TouchableOpacity onPress={() => Meteor.call('changeStatus', item._id, 'suggested')}>
           <Text style={[styles.rowText, styles.deleteText]}>X</Text>
         </TouchableOpacity>
       </View>
@@ -32,7 +33,7 @@ class MeteorListViewComponent extends Component {
         <MeteorListView
           collection="items"
           style={styles.container}
-          // selector={{}}
+          selector={{status:'iddlee'}}
           options={{sort: {createdAt: -1}}}
           renderRow={this.renderRow}
         />
