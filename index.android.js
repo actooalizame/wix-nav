@@ -30,6 +30,13 @@ Navigation.startTabBasedApp({
       icon: require('./screens/calculator.png'),
       selectedIcon: require('./screens/calculator.png'), // iOS only
       title: 'Busqueda'
+    },
+    {
+      label: 'Items',
+      screen: 'example.Items',
+      icon: require('./screens/catalog.png'),
+      selectedIcon: require('./screens/catalog.png'), // iOS only
+      title: 'MeteorItems'
     }
   ]
 });
